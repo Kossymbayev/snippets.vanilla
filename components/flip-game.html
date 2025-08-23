@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory FlipCard Game</title>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    :root {
+        --main-color: rgb(15 23 42);
+        --white-color: rgb(226, 232, 240);
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'montserrat', sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: var(--main-color);
+    }
+    p {font-size: 20px;}
+
+    .wrapper {
+        padding: 25px;
+        background: var(--white-color);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .cards, .card, .view, .details, p  {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cards {
+        height: 350px;
+        width: 350px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .cards .card  {
+        cursor: pointer;
+        position: relative;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        width: calc(100% / 4 - 10px);
+        height: calc(100% / 4 - 10px);
+    }
+    .card.shake  {
+        animation: shake 0.35s ease-in-out;
+    }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-13px); }
+        40% { transform: translateX(13px); }
+        60% { transform: translateX(-8px); }
+        80% { transform: translateX(8px); }
+    }
+
+    .cards .card .view {
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        pointer-events: none;
+        position: absolute;
+        border-radius: 7px;
+        backface-visibility: hidden;
+        transition: transform 0.25s linear;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card .front-view i,
+    .card .back-view i {
+        font-size: 40px;
+        color: var(--main-color);
+    }
+
+    .card .back-view {transform: rotateY(-180deg);}
+    .card.flip .front-view {transform: rotateY(180deg);}
+    .card.flip .back-view {transform: rotateY(0);}
+
+    .details {
+        width: 100%;
+        margin-top: 15px;
+        padding: 0 20px;
+        background: var(--white-color);
+        border-radius: 7px;
+        height: calc(100% / 4 - 30px);
+        justify-content: space-between;
+    }
+    .details p  {
+        font-size: 18px;
+        height: 17px;
+        padding-right: 18px;
+        color: var(--main-color);
+    }
+    .details p span {
+        margin-left: 8px;
+    }
+    .details p b  {
+        font-weight: 500;
+    }
+    .details button {
+        cursor: pointer;
+        font-size: 14px;
+        color: var(--main-color);
+        border-radius: 4px;
+        padding: 4px 11px;
+        background: var(--white-color);
+        border: 2px solid var(--main-color);
+        transition: 0.3s ease;
+    }
+    .details button:hover {
+        color: var(--white-color);
+        background: var(--main-color);
+    }
+
+    ::selection {
+        color: var(--white-color);
+        background: var(--main-color);
+    }
+
+    @media screen and (max-width: 700px) {
+        .cards {
+            height: 350px;
+            width: 350px;
+        }
+        .card .front-view i,
+        .card .back-view i {
+            font-size: 35px;
+        }
+    }
+    @media screen and (max-width: 530px) {
+        .cards {
+            height: 300px;
+            width: 300px;
+        }
+        .card .back-view i {
+            font-size: 30px;
+        }
+        .details {
+            margin-top: 10px;
+            padding: 0 15px;
+            height: calc(100% / 4 - 20px);
+        }
+        .details p {
+            height: 15px;
+            font-size: 17px;
+            padding-right: 13px;
+        }
+        .details button {
+            font-size: 13px;
+            padding: 5px 10px;
+            border: none;
+            color: var(--white-color);
+            background: var(--main-color);
+        }
+    }
+</style>
+<body>
+
+<div class="wrapper">
+    <ul class="cards">
+
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-tiktok"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-instagram-alt"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-facebook-circle"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-twitter"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-whatsapp"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-youtube"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-tiktok"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-instagram-alt"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-facebook-circle"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-twitter"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-whatsapp"></i>
+            </div>
+        </li>
+        <li class="card">
+            <div class="view front-view">
+                <i class="bx bx-question-mark"></i>
+            </div>
+            <div class="view back-view">
+                <i class="bx bxl-youtube"></i>
+            </div>
+        </li>
+
+        <div class="details">
+            <p class="time">Time : <span><b>0</b></span></p>
+            <p class="flips">Flips : <span><b>0</b></span></p>
+            <button>Refresh</button>
+        </div>
+
+    </ul>
+</div>
+
+<script>
+    const cards = document.querySelectorAll('.card');
+    const timeTag = document.querySelector('.time b');
+    const flipsTag = document.querySelector('.flips b');
+    const refreshBtn = document.querySelector('.details button');
+
+    let maxTime = 30;
+    let timeLeft = maxTime;
+    let flips = 0;
+    let matchedCards = 0;
+    let disableDeck = false;
+    let isPlaying = false;
+    let cardOne, cardTwo, timer;
+
+    function initTimer() {
+        if (timeLeft <= 0) {
+            return clearInterval(timer);
+        }
+        timeLeft--;
+        timeTag.innerText = timeLeft;
+    }
+
+    function flipCard({target: clickedCard}) {
+        if (!isPlaying) {
+            isPlaying = true;
+            timer = setInterval(initTimer, 1000);
+        }
+
+        if (clickedCard !== cardOne && !disableDeck && timeLeft > 0) {
+            flips++;
+            flipsTag.innerText = flips;
+            clickedCard.classList.add('flip');
+            if (!cardOne) {
+                return cardOne = clickedCard
+            }
+            cardTwo = clickedCard;
+            disableDeck = true;
+            let cardOneIcon = cardOne.querySelector('.back-view i').classList.value;
+            let cardTwoIcon = cardTwo.querySelector('.back-view i').classList.value;
+            matchCards( cardOneIcon, cardTwoIcon )
+        }
+    }
+
+    function matchCards( icon1, icon2 ) {
+        if (icon1 === icon2) {
+            matchedCards++;
+            if( matchedCards == 6 && timeLeft > 0 ) {
+                return clearInterval(timer);
+            }
+            cardOne.removeEventListener('click', flipCard);
+            cardTwo.removeEventListener('click', flipCard);
+            cardOne = cardTwo= '';
+            return disableDeck = false;
+        }
+
+        setTimeout(() => {
+            cardOne.classList.add('shake');
+            cardTwo.classList.add('shake');
+        }, 400);
+
+        setTimeout(() => {
+            cardOne.classList.remove('shake', 'flip');
+            cardTwo.classList.remove('shake', 'flip');
+            cardOne = cardTwo = '';
+            disableDeck = false;
+        }, 1200);
+    }
+
+    function shuffleCards() {
+        timeLeft = maxTime;
+        flips = matchedCards = 0;
+        cardOne = cardTwo = '';
+        clearInterval(timer);
+        timeTag.innerText = timeLeft;
+        flipsTag.innerText = flips;
+        disableDeck = isPlaying = false;
+
+        let arr = ['bxl-tiktok', 'bxl-instagram-alt', 'bxl-facebook-circle', 'bxl-twitter', 'bxl-whatsapp', 'bxl-youtube', 'bxl-tiktok', 'bxl-instagram-alt', 'bxl-facebook-circle', 'bxl-twitter', 'bxl-whatsapp', 'bxl-youtube'];
+        arr.sort(() => Math.random() > 0.5 ? 1 : -1);
+
+        cards.forEach((card, index) => {
+            card.classList.remove('flip');
+            let iconTag = card.querySelector('.back-view i');
+            setTimeout(() => {
+                iconTag.classList.value = `bx ${arr[index]}`;
+            }, 500);
+            card.addEventListener('click', flipCard);
+        })
+    }
+
+    shuffleCards();
+
+    refreshBtn.addEventListener('click', shuffleCards);
+
+    cards.forEach(card => {
+        card.addEventListener('click', flipCard);
+    });
+</script>
+</body>
+</html>
