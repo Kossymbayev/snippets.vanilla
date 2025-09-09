@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Catch game</title>
+</head>
+<style>
+    :root {
+        --main-color: rgb(15 23 42);
+        --white-color: rgb(226, 232, 240);
+        --accent-color: rgb(94 234 212);
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'montserrat', sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: var(--main-color);
+        padding: 0 20px;
+    }
+    p {font-size: 20px;}
+
+    .wrapper {
+        padding: 25px;
+        background: var(--white-color);
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        min-width: 300px;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .track {
+        margin-bottom: 24px;
+        position: relative;
+        min-width: 100%;
+        height: 16px;
+        background: var(--main-color);
+        border-radius: 10px;
+    }
+
+    .target-tracker {
+        position: absolute;
+        left: 50%;
+        right: 0;
+        top: -4px;
+        background: var(--accent-color);
+        width: 16px;
+        height: 24px;
+        border-radius: 8px;
+        border: 2px solid var(--main-color);
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .tracker {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -4px;
+        background: var(--white-color);
+        width: 16px;
+        height: 24px;
+        border-radius: 8px;
+        border: 2px solid var(--main-color);
+        z-index: 2;
+    }
+
+    .move {animation: move 2s linear infinite;}
+    @keyframes move {
+        0% {left: 0;}
+        50% {left: calc(100% - 16px);}
+        100% {left: 0;}
+    }
+
+    .auto-aim {
+        left: 50%;
+        transform: translateX(-50%);
+        animation: auto-aim 500ms linear;
+    }
+    @keyframes auto-aim {
+        0% {left: 0;}
+        100% {left: 50%;}
+    }
+
+    .percent {
+        margin-bottom: 24px;
+        width: 100%;
+        height: 56px;
+        font-size: 50px;
+        font-weight: bold;
+        text-align: center;
+        vertical-align: middle;
+        opacity: 0;
+        transition: opacity 300ms;
+    }
+    .percent.active {opacity: 1;}
+
+    .btn {
+        background: var(--main-color);
+        color: var(--white-color);
+        padding: 10px 16px;
+        border-radius: 10px;
+        width: auto;
+        text-align: center;
+        cursor: pointer;
+    }
+    .btn#catch-btn {margin-bottom: 16px;}
+    .btn#reset-btn {margin-bottom: 16px;}
+</style>
+<body>
+
+<div class="wrapper">
+    <div class="track" id="track">
+        <div class="target-tracker" id="target-tracker"></div>
+        <div class="tracker move" id="tracker"></div>
+    </div>
+
+    <div class="percent" id="percent-block"></div>
+
+    <div class="btn" id="catch-btn">Catch</div>
+    <div class="btn" id="reset-btn">Reset</div>
+    <div class="btn" id="auto-btn">100%</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.getElementById("track");
+        const tracker = document.getElementById("tracker");
+        const percentBlock = document.getElementById("percent-block");
+
+        const showPercentBlock = (percent) => {
+            percentBlock.innerText = `${Math.round(percent)}%`
+            percentBlock.classList.add("active");
+        }
+        const hidePercentBlock = () => {
+            percentBlock.classList.remove("active");
+            setTimeout(() => {percentBlock.innerText = ""}, 300)
+        }
+
+        const catchBall = () => {
+            const trackerLeft = tracker.offsetLeft
+            tracker.classList.remove("move");
+            tracker.style.left = `${trackerLeft}px`
+
+            const trackWidth = track.offsetWidth
+            const trackCenter = trackWidth / 2
+
+            const trackerWidth = tracker.offsetWidth
+            const trackerCenter = trackerLeft + (trackerWidth / 2)
+
+            let percent = (trackerCenter * 100) / trackCenter
+            if (percent > 100) {
+                let percentDifferent = percent - 100
+                percent = 100 - percentDifferent;
+            }
+            showPercentBlock(percent)
+        }
+
+        const resetGame = () => {
+            hidePercentBlock()
+            tracker.style.left = "0px"
+            tracker.classList.remove("auto-aim");
+            tracker.classList.add("move");
+        }
+
+        const autoAim = () => {
+            if (percentBlock.innerText === "100%") {return}
+
+            hidePercentBlock()
+            tracker.classList.remove("move");
+            tracker.style.left = "50%"
+            tracker.classList.add("auto-aim");
+            setTimeout(() => {showPercentBlock(100)}, 500)
+        }
+
+        const catchBtn = document.getElementById("catch-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const autoBtn = document.getElementById("auto-btn");
+
+        catchBtn.addEventListener("click", () => catchBall())
+        resetBtn.addEventListener("click", () => resetGame())
+        autoBtn.addEventListener("click", () => autoAim())
+    })
+</script>
+</body>
+</html>
