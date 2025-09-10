@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shining text</title>
+</head>
+<style>
+    :root {
+        --background-color: rgb(15 23 42);
+        --text-color: rgb(226, 232, 240);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'montserrat', sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: var(--background-color);
+        padding: 20px;
+    }
+
+    .shining-text {
+        position: relative;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        color: transparent;
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+        overflow: hidden;
+        background-image: linear-gradient(90deg, var(--background-color), var(--text-color), var(--background-color));
+        background-repeat: no-repeat;
+        background-size: 80%;
+        animation: animateShiningText 3s linear infinite;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0);
+    }
+
+    @keyframes animateShiningText {
+        0% {background-position: -500%;}
+        100% {background-position: 500%;}
+    }
+</style>
+<body>
+    <p class="shining-text">
+        Shining text animation effect
+    </p>
+</body>
+</html>

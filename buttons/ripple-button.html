@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Button Ripple Effect</title>
+</head>
+<style>
+    :root {
+        --background-color: rgb(15, 23, 42);
+        --text-color: rgb(15, 23, 42);
+
+        --btn-background-color: rgb(226, 232, 240);
+        --btn-hover-background-color: rgb(94, 234, 212);
+
+        --btn-width: 200px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'montserrat', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        align-items: center;
+        background: var(--background-color);
+    }
+
+    .btn {
+        background-color: var(--btn-background-color);
+        padding: 20px 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+        color: var(--text-color);
+        position: relative;
+        overflow: hidden;
+    }
+    .btn span {
+        position: relative;
+        z-index: 1;
+    }
+    .btn:before {
+        content: "";
+        position: absolute;
+        background-color: var(--btn-hover-background-color);
+        width: 0;
+        height: 0;
+        left: var(--xPos);
+        top: var(--yPos);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        transition: width 0.5s, height 0.5s;
+    }
+    .btn:hover:before {
+        width: 300px;
+        height: 300px;
+    }
+</style>
+<body>
+<a href="#" class="btn"><span>Hover me</span></a>
+
+<script>
+    const btnEl = document.querySelector(".btn");
+
+    btnEl.addEventListener("mouseover", (event) => {
+        const x = event.pageX - btnEl.offsetLeft;
+        const y = event.pageY - btnEl.offsetTop;
+
+        btnEl.style.setProperty("--xPos", x + "px");
+        btnEl.style.setProperty("--yPos", y + "px");
+    });
+</script>
+</body>
+</html>
