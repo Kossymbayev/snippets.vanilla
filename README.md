@@ -1,20 +1,20 @@
 # Snippets
 
 #### Components
-- [Flip game](https://kossymbayev.dev/snippets/flip-game/)
-- [Scroll indicator](https://kossymbayev.dev/snippets/scroll-indicator/)
-- [Catch game (center)](https://kossymbayev.dev/snippets/catch-center-game/)
-- [Catch game (top)](https://kossymbayev.dev/snippets/catch-top-game/)
-- [Gradient generator](https://kossymbayev.dev/snippets/gradient-generator/)
+- [Flip game](components/flip-game.html)
+- [Scroll indicator](components/scroll-indicator.html)
+- [Catch game (center)](components/catch-center-game.html)
+- [Catch game (top)](components/catch-top-game.html)
+- [Gradient generator](components/gradient-generator.html)
 
 #### Buttons
-- [Water button](https://kossymbayev.dev/snippets/water-button/)
-- [Ripple button](https://kossymbayev.dev/snippets/ripple-button/)
-- [Toggle switch](https://kossymbayev.dev/snippets/toggle-switch/)
+- [Water button](buttons/water-button.html)
+- [Ripple button](buttons/ripple-button.html)
+- [Toggle switch](buttons/toggle-switch.html)
 
 #### Text
-- [Shining text](https://kossymbayev.dev/snippets/shining-text/)
-- [Spitting text](https://kossymbayev.dev/snippets/spitting-text/)
+- [Shining text](text/shining-text.html)
+- [Spitting text](text/spitting-text.html)
 
 #### Other
-- [Multi-card spanning hover effect](https://kossymbayev.dev/snippets/multi-card-spanning-hover-effect/)
+- [Multi-card spanning hover effect](other/multi-card-spanning-hover-effect.html)
