@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Stop Watch</title>
+</head>
+<style>
+    :root {
+        --background-color: rgb(15 23 42);
+        --text-color: rgb(226, 232, 240);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: var(--background-color);
+        font-family: "montserrat", sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+        color: var(--text-color);
+    }
+
+    .timer {
+        font-size: 7rem;
+        font-weight: bold;
+        width: 600px;
+        text-align: center;
+        margin: 40px auto;
+    }
+
+    .btns {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        border: 2px solid var(--text-color);
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 1.5rem 4rem;
+        margin: 1rem;
+        border-radius: 16px;
+        cursor: pointer;
+    }
+
+    .btn.disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    @media (max-width: 800px) {
+        .timer {
+            font-size: 4rem;
+            width: 350px;
+        }
+
+        .btn {
+            font-size: 1.5rem;
+            padding: 1rem 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .btns {flex-direction: column;}
+    }
+</style>
+<body>
+
+    <div id="timer" class="timer">00:00:00</div>
+    <div id="buttons" class="btns">
+        <div id="start" class="btn">Start</div>
+        <div id="stop" class="btn">Stop</div>
+        <div id="reset" class="btn">Reset</div>
+    </div>
+
+    <script>
+        const timer = document.getElementById("timer");
+        const startBtn = document.getElementById("start");
+        const stopBtn = document.getElementById("stop");
+        const resetBtn = document.getElementById("reset");
+
+        let startTime = 0;
+        let elapsedTime = 0;
+        let timerInterval;
+
+        const formatTime = (elapsedTime) => {
+            const milliseconds = Math.floor((elapsedTime % 1000) / 10);
+            const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+            const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+            const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+
+            return (
+                (hours ? (hours > 9 ? hours : "0" + hours) : "00") +
+                ":" +
+                (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+                ":" +
+                (seconds ? (seconds > 9 ? seconds : "0" + seconds) : "00") +
+                "." +
+                (milliseconds > 9 ? milliseconds : "0" + milliseconds)
+            );
+        }
+
+        const startTimer = () => {
+            startTime = Date.now() - elapsedTime;
+
+            timerInterval = setInterval(() => {
+                elapsedTime = Date.now() - startTime;
+                timer.textContent = formatTime(elapsedTime);
+            }, 10);
+
+            startBtn.classList.add("disabled");
+            stopBtn.classList.remove("disabled");
+        }
+
+        const stopTimer = () => {
+            clearInterval(timerInterval);
+
+            startBtn.classList.remove("disabled");
+            stopBtn.classList.add("disabled");
+        }
+
+        const resetTimer = () => {
+            clearInterval(timerInterval);
+
+            elapsedTime = 0;
+            timer.textContent = "00:00:00";
+
+            startBtn.classList.remove("disabled");
+            stopBtn.classList.add("disabled");
+        }
+
+        startBtn.addEventListener("click", startTimer);
+        stopBtn.addEventListener("click", stopTimer);
+        resetBtn.addEventListener("click", resetTimer);
+    </script>
+</body>
+</html>

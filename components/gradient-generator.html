@@ -13,6 +13,9 @@
     :root {
         --background-color: rgb(15 23 42);
         --accent-color: rgb(15 23 42);
+        --text-color: rgb(226, 232, 240);
+        --container-background-color: rgb(226, 232, 240);
+        --border-color: #d5d5dc;
     }
 
     *,
@@ -29,7 +32,7 @@
     }
 
     .container {
-        background-color: #fff;
+        background-color: var(--container-background-color);
         width: 400px;
         padding: 50px 30px;
         position: absolute;
@@ -70,7 +73,7 @@
         height: 35px;
         width: 35px;
         background-color: transparent;
-        border: 2px solid #d5d5dc;
+        border: 2px solid var(--border-color);
         border-radius: 5px;
         cursor: pointer;
     }
@@ -78,13 +81,13 @@
     .buttons .active {
         border: none;
         background-color: var(--accent-color);
-        color: #fff;
+        color: var(--text-color);
     }
 
     #submit {
         display: block;
         background-color: var(--accent-color);
-        color: #fff;
+        color: var(--text-color);
         font-size: 16px;
         padding: 12px 70px;
         border-radius: 25px;
@@ -105,7 +108,7 @@
     #copy {
         font-size: 14px;
         background-color: var(--accent-color);
-        color: #fff;
+        color: var(--text-color);
         position: relative;
         left: 85%;
         bottom: 10px;
