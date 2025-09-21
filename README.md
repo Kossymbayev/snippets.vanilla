@@ -6,6 +6,8 @@
 - [Catch game (center)](components/catch-center-game.html)
 - [Catch game (top)](components/catch-top-game.html)
 - [Gradient generator](components/gradient-generator.html)
+- [Stop watch](components/stop-watch.html)
+- [Countdown timer](components/countdown-timer.html)
 
 #### Buttons
 - [Water button](buttons/water-button.html)
