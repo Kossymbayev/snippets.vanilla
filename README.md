@@ -15,6 +15,7 @@
 #### Text
 - [Shining text](text/shining-text.html)
 - [Spitting text](text/spitting-text.html)
+- [Typing text](text/typing-text.html)
 
 #### Other
 - [Multi-card spanning hover effect](other/multi-card-spanning-hover-effect.html)
