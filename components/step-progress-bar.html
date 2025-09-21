@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Step Progress Bar</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    :root {
+        --background-color: rgb(15 23 42);
+        --text-color: rgb(226, 232, 240);
+        --active-color: rgb(94, 234, 212);
+        --inactive-color: lightgray;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "montserrat", sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: var(--background-color);
+    }
+
+    .container {text-align: center;}
+
+    .progress-container {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        width: 500px;
+    }
+
+    .progress-bar-back {
+        position: absolute;
+        top: 50%;
+        height: 4px;
+        width: 100%;
+        margin: 0;
+        background-color: var(--inactive-color);
+        border: none;
+        z-index: -1;
+        transform: translateY(-50%);
+    }
+
+    .progress-bar-front {
+        position: absolute;
+        height: 4px;
+        width: 0;
+        background-color: var(--active-color);
+        border: none;
+        z-index: -1;
+        margin: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 0.4s linear width;
+    }
+
+    .step {
+        width: 30px;
+        height: 30px;
+        background-color: var(--background-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 4px solid var(--inactive-color);
+        border-radius: 50%;
+        color: var(--inactive-color);
+    }
+    .step.checked {
+        color: var(--active-color);
+        border-color: var(--active-color);
+        transition: all 0.4s linear;
+        transition-delay: 0.3s;
+    }
+    .step.checked small {
+        position: absolute;
+        bottom: -20px;
+    }
+
+    .btn {
+        background-color: var(--text-color);
+        border: none;
+        color: var(--background-color);
+        padding: 10px 20px;
+        margin: 70px 10px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn:hover {opacity: 0.9;}
+    .btn:active {transform: scale(0.97);}
+    .btn:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    @media (max-width: 500px) {
+        .progress-container {width: 90vw;}
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="progress-container">
+            <hr class="progress-bar-back" />
+            <hr class="progress-bar-front" />
+            <div class="step checked">
+                <i class="fas fa-check"></i>
+                <small>Start</small>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="step">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <button class="btn" id="prev" disabled>
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="btn" id="next"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <script>
+        const nextBtn = document.getElementById("next");
+        const prevBtn = document.getElementById("prev");
+        const progress = document.querySelector(".progress-bar-front");
+
+        const steps = document.querySelectorAll(".step");
+
+        let currentChecked = 1;
+
+        nextBtn.addEventListener("click", () => {
+            currentChecked++;
+            if (currentChecked > steps.length) {currentChecked = steps.length;}
+            updateStepProgress();
+        });
+
+        prevBtn.addEventListener("click", () => {
+            currentChecked--;
+            if (currentChecked < 1) {currentChecked = 1;}
+            updateStepProgress();
+        });
+
+        function updateStepProgress() {
+            steps.forEach((step, i) => {
+                if (i < currentChecked) {
+                    step.classList.add("checked");
+                    step.innerHTML = `
+                        <i class="fas fa-check"></i>
+                        <small>${i === 0 ? "Start" : i === steps.length - 1 ? "Final" : "Step " + i}</small>
+                    `;
+                } else {
+                    step.classList.remove("checked");
+                    step.innerHTML = `
+                        <i class="fas fa-times"></i>
+                        `;
+                }
+            });
+
+            const checkedNumber = document.querySelectorAll(".checked");
+
+            progress.style.width = ((checkedNumber.length - 1) / (steps.length - 1)) * 100 + "%";
+
+            if (currentChecked === 1) {
+                prevBtn.disabled = true;
+            } else if (currentChecked === steps.length) {
+                nextBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+                nextBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
