@@ -8,6 +8,7 @@
 - [Gradient generator](components/gradient-generator.html)
 - [Stop watch](components/stop-watch.html)
 - [Countdown timer](components/countdown-timer.html)
+- [Progress Bar](components/progress-bar.html)
 - [Step Progress Bar](components/step-progress-bar.html)
 
 #### Buttons
